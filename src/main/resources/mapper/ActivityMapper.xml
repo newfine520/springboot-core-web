@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.isg.springboottest.mapper.ActivityMapper">
+    <resultMap id="BaseResultMap" type="com.isg.springboottest.pojo.Activity">
+        <id column="Id" property="id"/>
+        <result column="activity_no" property="activityNo"/>
+        <result column="activity_name" property="activityName"/>
+        <result column="starttime" property="starttime"/>
+        <result column="endtime" property="endtime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="last_update_time" property="lastUpdateTime"/>
+        <result column="last_update_by" property="lastUpdateBy"/>
+        <result column="create_by_name" property="createByName"/>
+        <result column="last_update_by_name" property="lastUpdateByName"/>
+        <result column="store_id" property="storeId"/>
+    </resultMap>
+
+    <select id="listActivity" resultMap="BaseResultMap">
+        SELECT DISTINCT
+            a.id,
+            a.activity_name,
+            a.starttime,
+            a.endtime
+        FROM
+            Activity a
+                INNER JOIN gift_delivery b ON a.id = b.activity_id
+        WHERE
+            isnull( a.is_deleted, 0 ) = 0
+          AND endtime >= getdate( )
+          AND b.store_id = #{storeId}
+        order by starttime desc
+    </select>
+</mapper>

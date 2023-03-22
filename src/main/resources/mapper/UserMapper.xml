@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.isg.springboottest.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.isg.springboottest.pojo.User">
+        <result column="UID" property="UID"/>
+        <result column="RealName" property="RealName"/>
+        <result column="Mobile" property="Mobile"/>
+        <result column="Email" property="Email"/>
+        <result column="InternalNumber" property="InternalNumber"/>
+        <result column="CreateTime" property="CreateTime"/>
+        <result column="IsDelete" property="IsDelete"/>
+        <result column="LinkAddress" property="LinkAddress"/>
+    </resultMap>
+
+    <select id="listUser" resultMap="BaseResultMap">
+        SELECT DISTINCT
+            a.UID,
+            a.RealName,
+            a.Mobile,
+            a.Email,
+            a.InternalNumber,
+            a.CreateTime,
+            a.IsDelete,
+            a.LinkAddress
+        FROM
+            tms_user a
+        WHERE
+            a.UID in
+        <foreach collection="userRequest.UIDS" item="item" separator="," open="(" close=")">
+        #{item}
+        </foreach>
+        order by a.UID desc
+    </select>
+    <select id="getListForPage" resultMap="BaseResultMap">
+        SELECT DISTINCT
+        a.UID,
+        a.RealName,
+        a.Mobile,
+        a.Email,
+        a.InternalNumber,
+        a.CreateTime,
+        a.IsDelete,
+        a.LinkAddress
+        FROM
+        tms_user where a.aplogize=1 a order by a.UID
+    </select>
+</mapper>
