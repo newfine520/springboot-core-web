@@ -1,0 +1,19 @@
+spring:
+  profiles:
+    active: dev
+---
+
+---
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: http://106.14.245.171:8848
+        file-extension: yml
+        namespace: shfe-bigdata-sfituser-prod
+      discovery:
+        server-addr: ${spring.cloud.nacos.config.server-addr}
+        service: ${spring.application.name}
+        namespace: ${spring.cloud.nacos.config.namespace}
+  profiles: dev
+---
