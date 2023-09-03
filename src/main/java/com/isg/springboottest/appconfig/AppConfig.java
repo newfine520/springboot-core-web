@@ -63,13 +63,13 @@ public class AppConfig {
         datasource.setConnectionProperties(druidDataSourceProperty.getConnectionProperties());
         return datasource;
     }
-//    @Bean
-//    public PlatformTransactionManager transactionManager()
-//    {
-//        DataSourceTransactionManager transactionManager=new DataSourceTransactionManager();
-//        transactionManager.setDataSource(dataSource());
-//        return  transactionManager;
-//
-//    }
+    @Bean
+    public PlatformTransactionManager transactionManager()
+    {
+        DataSourceTransactionManager transactionManager=new DataSourceTransactionManager();
+        transactionManager.setDataSource(dataSource());
+        return  transactionManager;
+
+    }
 }
 

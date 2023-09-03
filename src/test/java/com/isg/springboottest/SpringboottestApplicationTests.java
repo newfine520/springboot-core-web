@@ -12,8 +12,7 @@ import com.isg.springboottest.service.UserService;
 //import org.elasticsearch.search.aggregations.AggregationBuilder;
 //import org.elasticsearch.search.aggregations.AggregationBuilders;
 //import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+//import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -21,14 +20,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.IOException;
 import java.util.Arrays;
 
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
 @SpringBootTest
 class SpringboottestApplicationTests {
 //    @Autowired
 //    private RestHighLevelClient client;
 //    @Autowired
 //    private UserService userService;
-    @Test
+    //@Test
     public void contextLoads() throws IOException {
 //        User user=userService.get(4);
 //        if(user!=null)

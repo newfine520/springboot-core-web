@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 //import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -52,6 +54,10 @@ public class MethodIdempotentCheck implements HandlerInterceptor {
             }
         }
         return  true;
+    }
+    public void postHandler(HttpServletRequest request,HttpServletResponse response,Object handler,ModelAndView modelAndView)
+    {
+
     }
     private void failure(HttpServletResponse response) throws Exception
     {

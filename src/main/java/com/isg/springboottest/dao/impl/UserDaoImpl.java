@@ -50,10 +50,10 @@ public class UserDaoImpl implements UserDao {
     }
     @MyAnn
     @Override
-    public Integer insert(UserRequest user) throws  Exception
+    public Integer insert(UserRequest user)
     {
-        try
-        {
+//        try
+//        {
 //        for(int i=0;i<2;i++)
 //        {
 //            if(i==1)
@@ -64,13 +64,13 @@ public class UserDaoImpl implements UserDao {
             //jdbcTemplate.execute("insert into tms_user(realname,email,InternalNumber,lastloginTime) values(\"" + user.getRealName() + "\",\""+user.getEmail()+"\",\""+user.getInternalNumber()+"\",\""+user.getLastLoginTime()+"\")");
             jdbcTemplate.execute("insert into tms_user(realname,email,InternalNumber) values(\"" + user.getRealName() + "\",\""+user.getEmail()+"\",\""+user.getInternalNumber()+"\")");
             //}
-            return 1;
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
+//            return 1;
+//        }
+//        catch (Exception e)
+//        {
+            //e.printStackTrace();
             return 0;
-        }
+//        }
 
     }
 }

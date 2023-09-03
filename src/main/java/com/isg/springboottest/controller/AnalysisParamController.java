@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.isg.springboottest.pojo.User;
 import com.isg.springboottest.service.UserService;
+import com.isg.springboottest.vo.request.DemoObjRequest;
 import com.isg.springboottest.vo.request.UserRequest;
 import com.isg.springboottest.vo.response.MyResponseEntity;
 import com.isg.springboottest.vo.response.UserResponse;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.spring.web.json.Json;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.sql.DataSource;
 import java.util.*;
 
 @RestController
@@ -187,4 +190,18 @@ public class AnalysisParamController {
     {
         return requestHeaderMap;
     }
+
+    //常规request参数获取，访问路径为/requestParam?id=1
+   @RequestMapping(value="/requestParam",produces = "text/plain;charset=UTF-8")//produces可定制返回的response的媒体类型和字符集(json:application/json;charset=UTF-8)
+   public String passRequestParam(Long id, HttpServletRequest request)
+   {
+       return "url:"+request.getRequestURL()+" can access,id:"+id;
+   }
+   //解释参数到对象，访问路径为/obj?id=1&name=zhangsan(SpringBoot自动做了处理:SpringBoot会帮我们自动填充到实体中)
+   @RequestMapping(value="/obj",produces = "application/json;charset=UTF-8")
+    public String passObj(DemoObjRequest obj,HttpServletRequest request)
+   {
+       return "url:"+request.getRequestURL()+" can acess,obj id: "+obj.getId()+"obj name:"+obj.getName();
+   }
+
 }

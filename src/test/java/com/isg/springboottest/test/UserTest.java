@@ -24,7 +24,7 @@ public class UserTest {
     @Autowired
     private UserService service;
     @Test
-    public  void deleteById()
+    public  void deleteById() throws Exception
     {
         service.deleteById(2);
     }

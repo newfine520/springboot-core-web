@@ -7,5 +7,5 @@ public interface UserDao {
     User get(Integer id);
     Integer deleteById(Integer id);
     Integer update(User user);
-    Integer insert(UserRequest user) throws  Exception;
+    Integer insert(UserRequest user);
 }

@@ -11,6 +11,7 @@ import com.isg.springboottest.service.YqStatService;
 import com.isg.springboottest.vo.request.DownloadFileRequestParam;
 import com.isg.springboottest.vo.request.UserRequest;
 import com.isg.springboottest.vo.response.MyResponseEntity;
+import com.isg.springboottest.vo.response.UserResponse;
 import com.isg.springboottest.vo.response.ViewResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,9 +33,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -66,11 +70,14 @@ public class DemoController {
     private FileService fileService;
     @Autowired
     private YqStatService yqStatService;
+
+    @Autowired
+    private DataSource dataSource;
 //    @ApiOperation("查询用户。。。")
 //    @GetMapping("/create")
 //    public String create()
 //    {
-//        String accesstoken= UUID.randomUUID().toString().replace("-","");
+//        String accesstoken= UUID.randomUUID().toString().replace("--","");
 //        //stringRedisTemplate.opsForValue().set(accesstoken,accesstoken,10, TimeUnit.MINUTES);
 //        stringRedisTemplate.opsForValue().set("TOKEN-IDAP2","\""+"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJJREFQMiIsImV4cCI6MTY1ODIyODA1NiwianRpIjoiMTIzNDU2In0.UDHPtuCA9byGmGXjuZ0MjG00Jwb8zRWTE4_sAnepifdZB42xqtiiTY6hbZ5TacQO4lDEBv3HIiYqEE0OuUtdWQ"+"\"",120, TimeUnit.MINUTES);
 //        LoginUser loginUser=new LoginUser();
@@ -140,15 +147,14 @@ public class DemoController {
         return "{\"code\":0,\"message\":\"创建成功\"}";
     }
     @GetMapping("/getUserById")
-    public Object getUserById()
-    {
+    public Object getUserById() {
        return userService.get(1);
         //return "hello";
     }
     @GetMapping("/deleteById")
-    public Object deleteById()
+    public Object deleteById() throws Exception
     {
-        return userService.deleteById(3);
+        return userService.deleteById(2);
         //return "hello";
     }
     @GetMapping("/" +
@@ -221,11 +227,10 @@ public class DemoController {
     @PostMapping("/insertWithRollBack")
     public MyResponseEntity<Integer> insertWithRollBack(@Valid @RequestBody User userRequest) throws  Exception
     {
-
         logger.info("输入参数userRequest.RealName:"+userRequest.getRealName());
         logger.info("输入参数userRequest:"+userRequest);
-        userRequest.setUID(2);
-        userRequest.setRealName("张三");
+        userRequest.setUID(27);
+        //userRequest.setRealName("张三");
         MyResponseEntity<Integer> myResponseEntity;
         try {
             Integer flag=userService.insertWithRollBack(userRequest);
@@ -273,4 +278,18 @@ public class DemoController {
     {
         return discoveryClient.getInstances("opinion-web");
     }
+
+
+    @PostMapping("/list")
+    public List<UserResponse> getUserList(@Valid @RequestBody UserRequest userRequest)
+    {
+        return userService.listUser(userRequest);
+    }
+
+    @GetMapping("/debug")
+    public void debug()
+    {
+        logger.debug("debug");
+    }
+
 }

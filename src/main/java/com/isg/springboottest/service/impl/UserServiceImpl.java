@@ -1,5 +1,9 @@
 package com.isg.springboottest.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.AbstractWrapper;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -19,6 +23,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.spring5.processor.SpringUErrorsTagProcessor;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,10 +40,26 @@ public class UserServiceImpl implements UserService {
     {
         return userDao.get(id);
     }
+    @Transactional(propagation = Propagation.REQUIRES_NEW,rollbackFor = ArithmeticException.class )
     @Override
-    public  Integer deleteById(Integer id)
+    public  Integer deleteById(Integer id) throws Exception
     {
-        int i=userDao.deleteById(id);
+        User updateUser=new User();
+        updateUser.setUID(id);
+        updateUser.setRealName("凯文·杜兰特");
+        int i=userMapper.updateById(updateUser);
+
+        return  i;
+    }
+    @Override
+    public Integer insert(User user)
+    {
+        return userMapper.insert(user);
+    }
+    @Override
+    public Integer insert(UserRequest userRequest)
+    {
+        int i=userDao.insert(userRequest);
         return  i;
     }
     @Override
@@ -46,17 +68,40 @@ public class UserServiceImpl implements UserService {
         int i=userDao.update(user);
         return  i;
     }
+    @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = {IllegalArgumentException.class},isolation = Isolation.REPEATABLE_READ)
+    public Integer insertWithTransaction(User user) throws Exception
+    {
+        try
+        {
+            userMapper.insert(user);
+        }
+        catch (Exception e)
+        {
+            throw  e;
+        }
+        return 0;
+    }
+    @Override
+    //@Transactional(propagation = Propagation.REQUIRED,rollbackFor = {Exception.class},isolation = Isolation.REPEATABLE_READ)
     public  Integer insertWithRollBack(User user) throws  Exception
     {
-          //return userDao.insert(user);
-        Integer result=userMapper.insert(user);
-        if(user.getRealName().equals("张三"))
-        {
-            throw new IllegalArgumentException("张三已存在，数据将回滚");
-        }
-        return result;
+        Integer result=insertWithTransaction(user);
+//        try {
+//            User updateUser = new User();
+//            updateUser.setUID(2);
+//            updateUser.setRealName("凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特");
+//            int i = userMapper.updateById(updateUser);
+//        }
+//        catch (Exception e)//捕获并抛出异常，事务生效，否则事务不生效
+//        {
+//            throw e;
+//        }
+        User updateUser = new User();
+        updateUser.setUID(28);
+        updateUser.setRealName("凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特凯文·杜兰特");
+        insertWithTransaction(updateUser);
+        return 0;
     }
     @Override
     @Transactional(propagation = Propagation.REQUIRED,noRollbackFor = {IllegalArgumentException.class},isolation = Isolation.REPEATABLE_READ)
@@ -72,7 +117,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserResponse> listUser(UserRequest userRequest)
     {
-        List<User> activities = userMapper.listUser(userRequest);
+
+        QueryWrapper<User> wrapper=new QueryWrapper<>();
+        wrapper.like("RealName",userRequest.getRealName());
+        List<User> activities=userMapper.selectList(wrapper);
+        //List<User> activities = userMapper.listUser(userRequest);
         if (CollectionUtils.isEmpty(activities)) {
             return Lists.newArrayList();
         }

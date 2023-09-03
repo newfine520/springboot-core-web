@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix = "spring.datasource.druid",ignoreInvalidFields = true)
+@ConfigurationProperties(prefix = "spring.datasource.dynamic.datasource.sys",ignoreInvalidFields = true)
 public class DruidDataSourceProperty {
     // 数据库配置
     private String url;

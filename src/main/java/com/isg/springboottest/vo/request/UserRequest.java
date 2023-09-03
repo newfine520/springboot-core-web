@@ -26,7 +26,7 @@ public class UserRequest {
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
     private Date birthday;
     private Integer age;
-    private Integer uID;
+    private Integer uid;
     //20211117注意变量名字规范很重要，取这样的名字：uIDS、uIds，controller接收不到值，找了好久的问题。。
     private List<Integer> userIds;
     private Integer page;//当前页

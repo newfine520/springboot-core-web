@@ -9,10 +9,13 @@ import java.util.List;
 
 public interface UserService {
     User get(Integer id);
-    Integer deleteById(Integer id);
+    Integer deleteById(Integer id) throws Exception;
     Integer update(User user);
     Integer insertWithRollBack(User user) throws  Exception;
     Integer insertWithoutRollBack(User user);
     List<UserResponse> listUser(UserRequest userRequest);
     UserResponseForPage getListForPage(UserRequest userRequest);
+    Integer insert(UserRequest userRequest);
+    Integer insert(User user);
+    Integer insertWithTransaction(User user) throws Exception;
 }
