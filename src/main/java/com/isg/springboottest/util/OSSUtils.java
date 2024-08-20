@@ -41,7 +41,7 @@ public class OSSUtils implements InitializingBean {
     public String endpoint;
     @Value("${oss.resource.accessKeyId:abcdefghijklmnopqrstuvwxyz1}")
     public String accessKeyId;
-    @Value("${oss.resource.accessKeySecret:abcdefghijklmnopqrstuvwxyz}")
+    @Value("${oss.resource.accessKeySecret:abcdefghijklmnopqrstuvwxyz1}")
     private String accessKeySecret;
     @Value("${oss.resource.bucketName:sfa-workbench-plus}")
     private String bucketName;
