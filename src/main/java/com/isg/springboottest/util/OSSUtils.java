@@ -39,11 +39,11 @@ public class OSSUtils implements InitializingBean {
     //当配置项无法解析时，取默认值
     @Value("${oss.resource.endpoint:oss-cn-shanghai.aliyuncs.com}")
     public String endpoint;
-    @Value("${oss.resource.accessKeyId:abcdefghijklmnopqrstuvwxyz1}")
+    @Value("${oss.resource.accessKeyId}")
     public String accessKeyId;
-    @Value("${oss.resource.accessKeySecret:abcdefghijklmnopqrstuvwxyz1}")
+    @Value("${oss.resource.accessKeySecret}")
     private String accessKeySecret;
-    @Value("${oss.resource.bucketName:sfa-workbench-plus}")
+    @Value("${oss.resource.bucketName}")
     private String bucketName;
 
 
